@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Timeline from 'react-visjs-timeline'
 import moment from 'moment'
 import './App.css'
+import data from './data'
+import ThermalMap from './thermalMap'
 
 const groupsExample = {
   groups: [],
@@ -62,6 +64,7 @@ class App extends Component {
         remove: true,
         overrideItems: false
       },
+      stack: false,
       itemsAlwaysDraggable: {
         item: true,
         range: true
@@ -77,6 +80,7 @@ class App extends Component {
           selection={this.state.selectedIds}
           onMove={this.onMove}
         />
+        <ThermalMap data={data} />
       </div>
     )
   }
