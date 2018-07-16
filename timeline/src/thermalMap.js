@@ -57,7 +57,7 @@ class ThermalMap extends Component {
             }}
           />
           <Axis name='day' grid={null} />
-          <Geom type='polygon' position='week*day*date' shape='boundary-polygon' color={['commits', '#BAE7FF-#1890FF-#0050B3']} />
+          <Geom type='polygon' position='week*day*date' shape='boundary-polygon' color={['orders', '#BAE7FF-#1890FF-#0050B3']} />
           <Coord reflect='y' />
         </Chart>
       </div>
