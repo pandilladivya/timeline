@@ -7,7 +7,8 @@ class ThermalMap extends Component {
 
     this.state = {
       data: this.props.data,
-      selectedTruck: this.props.selectedTruck
+      selectedTruck: this.props.selectedTruck,
+      selected: ''
     }
     this.renderChart = this.renderChart.bind(this)
   }
@@ -15,11 +16,13 @@ class ThermalMap extends Component {
   componentWillReceiveProps (nextProps) {
     this.setState({selectedTruck: nextProps.selectedTruck})
     this.setState({data: nextProps.data})
-    this.render()
+  }
+  setSelected (data) {
+    this.setState({selected: data.data._origin})
   }
 
   renderChart (data, cols, padding) {
-    return <Chart height={400} data={data} scale={cols} forceFit padding={padding}>
+    return <Chart height={400} data={data} scale={cols} forceFit padding={padding} onPlotClick={(data) => { this.setSelected(data) }}>
       <Tooltip title='date' />
       <Axis name='week'position='top' tickLine={null} line={null} label={
         {
@@ -49,12 +52,16 @@ class ThermalMap extends Component {
       />
       <Axis name='day' grid={null} />
       <Geom type='polygon' position='week*day*date' shape='boundary-polygon' color={['orders', '#BAE7FF-#1890FF-#0050B3']}
+        select={[ true, {
+          mode: ' single ', animate: true }]}
 
       />
       <Coord reflect='y' />
     </Chart>
   }
+
   render () {
+    console.log('fjghfdgjfdg', this.state.selected)
     const cols = {
       day: {
         type: 'cat',
@@ -75,6 +82,9 @@ class ThermalMap extends Component {
           ? <div>
             <h4 style={{marginTop: 20, marginBottom: -40}}>{this.state.selectedTruck}</h4>
             {this.renderChart(data, cols, padding)}
+            <div>
+              {this.state.selected != '' ? <div> <p>Date : {this.state.selected.date}</p>  <p>Orders : {this.state.selected.orders}</p> </div> : <div />}
+            </div>
           </div> : <div />}
       </div>
     )

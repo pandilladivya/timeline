@@ -51,8 +51,6 @@ class App extends Component {
   }
 
   render () {
-    console.log('fjghfdgjfdg', this.state.selectedTruck)
-    
     var options = {
       width: '100%',
       margin: {
