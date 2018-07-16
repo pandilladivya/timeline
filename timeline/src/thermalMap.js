@@ -6,10 +6,54 @@ class ThermalMap extends Component {
     super(props)
 
     this.state = {
-      data: this.props.data
+      data: this.props.data,
+      selectedTruck: this.props.selectedTruck
     }
+    this.renderChart = this.renderChart.bind(this)
   }
 
+  componentWillReceiveProps (nextProps) {
+    this.setState({selectedTruck: nextProps.selectedTruck})
+    this.setState({data: nextProps.data})
+    this.render()
+  }
+
+  renderChart (data, cols, padding) {
+    return <Chart height={400} data={data} scale={cols} forceFit padding={padding}>
+      <Tooltip title='date' />
+      <Axis name='week'position='top' tickLine={null} line={null} label={
+        {
+          offset: 12,
+          textStyle: {
+            fontSize: 12,
+            fill: '#666',
+            textBaseline: 'top'
+          },
+          formatter: val => {
+            if (val === '2') {
+              return 'MAY'
+            } else if (val === '6') {
+              return 'JUN'
+            } else if (val === '10') {
+              return 'JUL'
+            } else if (val === '15') {
+              return 'AUG'
+            } else if (val === '19') {
+              return 'SEP'
+            } else if (val === '24') {
+              return 'OCT'
+            }
+            return ''
+          }
+        }}
+      />
+      <Axis name='day' grid={null} />
+      <Geom type='polygon' position='week*day*date' shape='boundary-polygon' color={['orders', '#BAE7FF-#1890FF-#0050B3']}
+
+      />
+      <Coord reflect='y' />
+    </Chart>
+  }
   render () {
     const cols = {
       day: {
@@ -27,39 +71,11 @@ class ThermalMap extends Component {
     const {data} = this.state
     return (
       <div className='App'>
-
-        <Chart height={400} data={data} scale={cols} forceFit padding={padding}>
-          <Tooltip title='date' />
-          <Axis name='week'position='top' tickLine={null} line={null} label={
-            {
-              offset: 12,
-              textStyle: {
-                fontSize: 12,
-                fill: '#666',
-                textBaseline: 'top'
-              },
-              formatter: val => {
-                if (val === '2') {
-                  return 'MAY'
-                } else if (val === '6') {
-                  return 'JUN'
-                } else if (val === '10') {
-                  return 'JUL'
-                } else if (val === '15') {
-                  return 'AUG'
-                } else if (val === '19') {
-                  return 'SEP'
-                } else if (val === '24') {
-                  return 'OCT'
-                }
-                return ''
-              }
-            }}
-          />
-          <Axis name='day' grid={null} />
-          <Geom type='polygon' position='week*day*date' shape='boundary-polygon' color={['orders', '#BAE7FF-#1890FF-#0050B3']} />
-          <Coord reflect='y' />
-        </Chart>
+        {this.state.selectedTruck !== 'none'
+          ? <div>
+            <h4 style={{marginTop: 20, marginBottom: -40}}>{this.state.selectedTruck}</h4>
+            {this.renderChart(data, cols, padding)}
+          </div> : <div />}
       </div>
     )
   }

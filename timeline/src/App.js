@@ -9,7 +9,7 @@ const groupsExample = {
   groups: [],
   items: [],
   options: {
-    groupOrder: 'content' // groupOrder can be a property name or a sorting function
+    groupOrder: 'content' // groupOrder can be a property name or a sorting function,
   }
 }
 
@@ -44,11 +44,15 @@ class App extends Component {
     super(props)
 
     this.state = {
-      selectedIds: []
+      selectedIds: [],
+      selectedTruck: 'none'
     }
+    this.clickHandler = this.clickHandler.bind(this)
   }
 
   render () {
+    console.log('fjghfdgjfdg', this.state.selectedTruck)
+    
     var options = {
       width: '100%',
       margin: {
@@ -80,7 +84,7 @@ class App extends Component {
           selection={this.state.selectedIds}
           onMove={this.onMove}
         />
-        <ThermalMap data={data} />
+        <ThermalMap data={data} selectedTruck={this.state.selectedTruck} />
       </div>
     )
   }
@@ -89,12 +93,9 @@ class App extends Component {
   }
   clickHandler (props) {
     const { group } = props
-    const selectedIds = groupsExample.items
-      .filter(item => item.group === group)
-      .map(item => item.id)
-    // this.setState({
-    //   selectedIds
-    // })
+    console.log('group', group)
+    var no = group + 1
+    this.setState({selectedTruck: 'Truck' + no})
   }
 }
 
