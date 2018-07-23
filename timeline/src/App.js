@@ -93,7 +93,7 @@ class App extends Component {
     const { group } = props
     console.log('group', group)
     var no = group + 1
-    this.setState({selectedTruck: 'Truck' + no})
+    if (this.state.selectedTruck !== 'Truck' + no) { this.setState({selectedTruck: 'Truck' + no}) }
   }
 }
 
