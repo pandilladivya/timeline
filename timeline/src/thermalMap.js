@@ -80,7 +80,7 @@ class ThermalMap extends Component {
       <div className='App'>
         {this.state.selectedTruck !== 'none'
           ? <div>
-            <h4 style={{marginTop: 20, marginBottom: -40}}>{this.state.selectedTruck}</h4>
+            <h4 style={{marginTop: 20, marginBottom: 20}}>{this.state.selectedTruck}</h4>
             {this.renderChart(data, cols, padding)}
             <div>
               {this.state.selected != '' ? <div> <p>Date : {this.state.selected.date}</p>  <p>Orders : {this.state.selected.orders}</p> </div> : <div />}
